@@ -1,9 +1,29 @@
+/* Tried to correct operator sequence,
+ * Added the brackets checker
+ */
+// Run main to Test whether it works
+
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Validate {
+
     public static char[] tokens;
 
-    //this method checks if the end of the expression is valid
+    //This method checks if the character at the beginning of the expression is valid
+    public static boolean validateFirstindex(){
+        char first= tokens[0];
+
+        if ((first>='0' && first<='9')|| first=='+' || first=='-' || first=='(' || first==' '){
+
+            return true;
+        }else{
+            System.out.println("Invalid sequence; "+tokens[0]+" cannot be at the beginning of an expression");
+            return false;
+        }
+    }
+
+    //This method checks if the end of the expression is valid
     public static boolean endExpression() {
 
         //k is the position of the last character
@@ -15,54 +35,39 @@ public class Validate {
         if(Character.isDigit(tokens[k])|| tokens[k]==' ' || tokens[k]==')'){
             return true;
         } else{
-            System.out.println("End of expression is invalid!");
+            System.out.println("Invalid sequence; "+tokens[tokens.length-1]+" cannot be at the end of an expression");
             return false;
         }
     }
 
-    //This method ensures that two subsequent operators are valid and in the correct order
-    public static boolean operatorSeq() {
-        //Update
+    //Check whether all brackets are balanced
+    public static boolean checkBrackets() {
+        //Initialize stack to store brackets
+        Stack<Character> brackets = new Stack<Character>();
 
-        // Stack for numbers: 'values'
-        for (int i = 0; i < (tokens.length); i++) {
-
-            if (tokens[i] == '+' || tokens[i] == '-' || tokens[i] == '*' || tokens[i] == '/'  || tokens[i] == '(' || tokens[i] == ')'  || tokens[i] == '&') {
-
-                // check when user enters similar subsequent operators
-
-
-                if (tokens[i + 1] == '+' || tokens[i + 1] == '-' || tokens[i + 1] == '(') {
-                    if (tokens[i + 1] == '+' || tokens[i + 1] == '-' && (tokens[i] == '-' || tokens[i + 1] == '-')) {// when use enters + and - subsequently, remove + from equation and retain -
-
-                        tokens[i] = ' ';
-                        tokens[i + 1] = '-';
-
-                    }
-
-                if (tokens[i + 1] == '+' || tokens[i + 1] == '-') {
-                    if (tokens[i] == tokens[i + 1]) {
-                        tokens[i] = ' ';
-                        i--;
-                    }
-                }
-
-
-                continue;//return true confirming correct order of operators
+        for (int i=0; i<tokens.length; i++) {
+            if (tokens[i] == '(') {
+                brackets.push(tokens[i]);
             }
-            }else if(tokens[i+1] == '*' || tokens[i+1] == '/'  || tokens[i+1] == ')'  || tokens[i+1] == '&') {
-                System.out.println("Illegal order of operators: " + tokens[i+1] + " cannot come after" + tokens[i]);
-                return false;//return false confirming wrong order of subsequent operators
+
+            else if (tokens[i] == ')') {
+                if (brackets.empty()) {
+                    System.out.println("Brackets are not balanced");
+                    return false;
+                }
+                else brackets.pop();
             }
         }
 
+        if (!brackets.empty()) {
+            System.out.println("Brackets are not balanced");
+            return false;
+        }
         return true;
-
     }
 
-
+    //This method ensures the Expression contains valid characters
     public static boolean validCharacters(){
-
         //Iterate through entire tokens
         int i = 0;
         while(i < tokens.length) {
@@ -103,7 +108,7 @@ public class Validate {
                     i++;
                 }
                 else {
-                    System.out.println("Illegal character at "+tokens[i]);
+                    System.out.println("Illegal character sequence near "+tokens[i]);
                     return false;
                 }
             }
@@ -112,13 +117,13 @@ public class Validate {
             else if (tokens[i] == ' ' && i < tokens.length - 1) {
                 //Check whether it is between a number and a decimal point
                 if (tokens[i-1] >= '0' && tokens[i-1] <= '9' && tokens[i+1] == '.') {
-                    System.out.println("Illegal character at "+tokens[i]);
+                    System.out.println("Illegal character sequence near "+tokens[i]);
                     return false;
                 }
 
                 //Check whether it is between two numbers
                 else if (tokens[i-1] >= '0' && tokens[i-1] <= '9' && tokens[i+1] >= '0' && tokens[i+1] <= '9') {
-                    System.out.println("Illegal character at "+tokens[i]);
+                    System.out.println("Illegal character sequence near "+tokens[i]);
                     return false;
                 }
 
@@ -140,22 +145,72 @@ public class Validate {
                 return false;
             }
         }
-
         return true;
     }
 
-    public static boolean validateFirstindex(){
-        char first= tokens[0];
+    //This method ensures that two subsequent operators are valid and in the correct order
+    public static boolean operatorSeq() {
+        for (int i = 0; i < (tokens.length); i++) {
 
-        if ((first>='0' && first<='9')|| first=='+' || first=='-' || first=='(' || first==' '){
+            if (tokens[i] == '+' || tokens[i] == '-' || tokens[i] == '*' || tokens[i] == '/'  || tokens[i] == '(' || tokens[i] == ')'  || tokens[i] == '&') {
 
-            return true;
-        }else{
-            System.out.println("error in the first digit");
-            return false;
+                //check for opening bracket
+                if (tokens[i] == '(' && (tokens[i + 1] == '*' || tokens[i + 1] == '/' || tokens[i + 1] == '&')) {
+                    System.out.println("Invalid sequence; "+tokens[i]+" cannot be followed by "+tokens[i+1]);
+                    return false;
+                }
+
+                //check for closing bracket
+                else if (tokens[i] == ')' && i != tokens.length-1 && !(tokens[i + 1] == '+' || tokens[i + 1] == '-' || tokens[i + 1] == '*' || tokens[i + 1] == '/' || tokens[i + 1] == '(' || tokens[i + 1] == ')' || tokens[i + 1] == '&' || tokens[i + 1] == ' ')) {
+                    System.out.println("Invalid sequence; "+tokens[i]+" cannot be followed by "+tokens[i+1]);
+                    return false;
+                }
+
+                //check for multiplication
+                else if (tokens[i] == '*' && (tokens[i + 1] == '*' || tokens[i + 1] == '/' || tokens[i + 1] == '&')) {
+                    System.out.println("Invalid sequence; "+tokens[i]+" cannot be followed by "+tokens[i+1]);
+                    return false;
+                }
+
+                //check for division
+                else if (tokens[i] == '/' && (tokens[i + 1] == '*' || tokens[i + 1] == '/' || tokens[i + 1] == '&')) {
+                    System.out.println("Invalid sequence; "+tokens[i]+" cannot be followed by "+tokens[i+1]);
+                    return false;
+                }
+
+                //check for 'of'
+                else if (tokens[i] == '&' && (tokens[i + 1] == '*' || tokens[i + 1] == '/' || tokens[i + 1] == '&')) {
+                    System.out.println("Invalid sequence; "+tokens[i]+" cannot be followed by "+tokens[i+1]);
+                    return false;
+                }
+
+                //check for addition
+                else if (tokens[i] == '+' && (tokens[i + 1] == '*' || tokens[i + 1] == '/' || tokens[i + 1] == '&')) {
+                    System.out.println("Invalid sequence; "+tokens[i]+" cannot be followed by "+tokens[i+1]);
+                    return false;
+                } else if (tokens[i] == '+' && (tokens[i + 1] == '+')) {
+                    tokens[i] = ' ';
+                } else if (tokens[i] == '+' && (tokens[i + 1] == '-')) {
+                    tokens[i] = ' ';
+                    tokens[i + 1] = '-';
+                }
+
+                //check for subtraction
+                else if (tokens[i] == '-' && (tokens[i + 1] == '*' || tokens[i + 1] == '/' || tokens[i + 1] == '&')) {
+                    System.out.println("Invalid sequence; "+tokens[i]+" cannot be followed by "+tokens[i+1]);
+                    return false;
+                } else if (tokens[i] == '-' && (tokens[i + 1] == '-')) {
+                    tokens[i] = ' ';
+                    tokens[i + 1] = '+';
+                } else if (tokens[i] == '-' && (tokens[i + 1] == '+')) {
+                    tokens[i] = ' ';
+                    tokens[i + 1] = '-';
+                }
+            }
         }
-
+        return true;
     }
+
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -166,18 +221,17 @@ public class Validate {
 
         if (validateFirstindex()) {
             if (endExpression()) {
-                if (validCharacters()) {
-                    if (operatorSeq()) {
-                        System.out.println("Expression is Valid");
+                if (checkBrackets()) {
+                    if (validCharacters()) {
+                        if (operatorSeq()) {
+                            System.out.println("Expression is Valid");
+                            for (int i=0; i<tokens.length; i++) {
+                                System.out.print(tokens[i]);
+                            }
+                        }
                     }
                 }
             }
         }
-
-
-        for (int i=0; i<tokens.length; i++) {
-            System.out.print(tokens[i]);
-        }
     }
 }
-
