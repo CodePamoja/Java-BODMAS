@@ -3,6 +3,24 @@ package bodmas;
 
 
 public class Validates {
+	
+ //this method checks if the end of the expression is valid
+   public static boolean endExpression(String expression){
+ 
+       char[] tokens = expression.toCharArray();
+    
+       //condition checks the last character of the string
+       //if the last character matches the given condition, the expression is invalid
+       //else, it is valid
+       int k = tokens.length -1;
+       if(tokens[k]== '('|| tokens[k]=='+' || tokens[k]=='-'
+        || tokens[k]=='*' || tokens[k]=='/' || tokens[k] == '.'){
+            return false;
+       } else{
+            return true;
+      }
+      
+    }	
 
 	//This method ensures that two subsequent operators are valid and in the correct order
   public static boolean operatorSeq(String expression)
