@@ -1,3 +1,3 @@
-public class Validates {
+public class Validate {
 
 }
