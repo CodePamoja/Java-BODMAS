@@ -54,7 +54,8 @@ public class Validates {
         
         				return true;//return true confirming correct order of operators
         			}else if(tokens[i+1] == '*' || tokens[i+1] == '/'  || tokens[i+1] == ')'  || tokens[i+1] == '&') {
-        				return false;//return false confirming wrong order of subsequent operators
+        				System.out.println("Illegal order of operators: " + tokens[i+1] + " cannot come after" + tokens[i]);
+					return false;//return false confirming wrong order of subsequent operators
     				}
         		}
         		}
