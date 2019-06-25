@@ -26,11 +26,12 @@ public class Validates {
 	//This method ensures that two subsequent operators are valid and in the correct order
 	public static boolean operatorSeq(String expression)
     {
-
+		//Update
+		
         char[] tokens = expression.toCharArray();
 
         // Stack for numbers: 'values'
-        for (int i = 0; i < (tokens.length - 1); i++) {
+        for (int i = 0; i < (tokens.length); i++) {
         		
         		if (tokens[i] == '+' || tokens[i] == '-' || tokens[i] == '*' || tokens[i] == '/'  || tokens[i] == '(' || tokens[i] == ')'  || tokens[i] == '&') {
         			
@@ -38,14 +39,25 @@ public class Validates {
         			
         			
         			if(tokens[i+1] == '+' || tokens[i+1] == '-' || tokens[i + 1] == '(' ){
-        				if(tokens[i+1] == '+' || tokens[i+1] == '-' ) {// when use enters + and - subsequently, remove + from equation and retain -
-        					if(tokens[i] == '-' || tokens[i+1] == '-') {
+        				if(tokens[i+1] == '+' || tokens[i+1] == '-' && (tokens[i] == '-' || tokens[i+1] == '-' ) ) {// when use enters + and - subsequently, remove + from equation and retain -
+        					
         						tokens[i] = ' ';
         						tokens[i+1] = '-';
             					
             				}
         					
+        					
+        					
         				}
+        			
+        			if(tokens[i+1] == '+' || tokens[i+1] == '-') {
+        				if(tokens[i] ==  tokens[i+1] ) {
+    						tokens[i] = ' ';
+    						//i--;
+        				}
+        			}
+        			
+        			
         				
         				
         				
@@ -55,8 +67,7 @@ public class Validates {
         				return false;//return false confirming wrong order of subsequent operators
     				}
         		}
-        		}
-
+        		
 		return true;
 
         }
