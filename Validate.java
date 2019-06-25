@@ -15,8 +15,10 @@ public class Validates {
        int k = tokens.length -1;
        if(tokens[k]== '('|| tokens[k]=='+' || tokens[k]=='-'
         || tokens[k]=='*' || tokens[k]=='/' || tokens[k] == '.'){
+	    System.out.println("End of expression is invalid!");   
             return false;
        } else{
+	    System.out.println("End of expression is valid.");   
             return true;
       }
       
