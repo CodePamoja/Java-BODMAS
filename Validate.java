@@ -24,19 +24,18 @@ public class Validates {
     }	
 
 	//This method ensures that two subsequent operators are valid and in the correct order
-  public static boolean operatorSeq()
+public static boolean operatorSeq(String expression)
     {
 
+        char[] tokens = expression.toCharArray();
+
         // Stack for numbers: 'values'
-        for (int i = 0; i < tokens.length; i++) {
+        for (int i = 0; i < (tokens.length - 1); i++) {
         		
         		if (tokens[i] == '+' || tokens[i] == '-' || tokens[i] == '*' || tokens[i] == '/'  || tokens[i] == '(' || tokens[i] == ')'  || tokens[i] == '&') {
         			
         			// check when user enters similar subsequent operators
-        			if(tokens[i] ==  tokens[i+1] ) {
-						tokens[i] = ' ';
-						i--;
-    				}
+        			
         			
         			if(tokens[i+1] == '+' || tokens[i+1] == '-' || tokens[i + 1] == '(' ){
         				if(tokens[i+1] == '+' || tokens[i+1] == '-' ) {// when use enters + and - subsequently, remove + from equation and retain -
@@ -45,19 +44,23 @@ public class Validates {
         						tokens[i+1] = '-';
             					
             				}
+        					
         				}
         				
-        
-        				return true;//return true confirming correct order of operators
+        				
+        				
+        				continue;//return true confirming correct order of operators
         			}else if(tokens[i+1] == '*' || tokens[i+1] == '/'  || tokens[i+1] == ')'  || tokens[i+1] == '&') {
         				System.out.println("Illegal order of operators: " + tokens[i+1] + " cannot come after" + tokens[i]);
-					return false;//return false confirming wrong order of subsequent operators
+        				return false;//return false confirming wrong order of subsequent operators
     				}
         		}
         		}
+
 		return true;
 
         }
+
 
 	public static boolean validateCharacters(){
 
