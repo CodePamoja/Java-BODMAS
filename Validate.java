@@ -9,18 +9,19 @@ public class Validates {
  
        char[] tokens = expression.toCharArray();
     
-       //condition checks the last character of the string
-       //if the last character matches the given condition, the expression is invalid
-       //else, it is valid
+       //k is the position of the last character
        int k = tokens.length -1;
-       if(tokens[k]== '('|| tokens[k]=='+' || tokens[k]=='-'
-        || tokens[k]=='*' || tokens[k]=='/' || tokens[k] == '.'){
-	    System.out.println("End of expression is invalid!");   
-            return false;
-       } else{
-	    System.out.println("End of expression is valid.");   
+	   
+       //condition checks the last character of the array
+       //if the last character matches the given condition, the expression is valid
+       //else, it is invalid	   
+       if(Character.isDigit(tokens[k])|| tokens[k]==' ' || tokens[k]==')'){
+	    System.out.println("End of expression is valid");   
             return true;
-      }
+       } else{
+	    System.out.println("End of expression is invalid!");    
+            return false;
+       }
       
     }	
 
