@@ -24,7 +24,7 @@ public class Validates {
     }	
 
 	//This method ensures that two subsequent operators are valid and in the correct order
-public static boolean operatorSeq(String expression)
+	public static boolean operatorSeq(String expression)
     {
 
         char[] tokens = expression.toCharArray();
@@ -60,7 +60,6 @@ public static boolean operatorSeq(String expression)
 		return true;
 
         }
-
 
 	public static boolean validateCharacters(){
 
