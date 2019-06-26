@@ -40,6 +40,7 @@ public class Validate {
 								
 							}else
 							{
+								 System.out.println("Imbalanced brackets: ");
 								return false;
 							}
 
@@ -53,6 +54,7 @@ public class Validate {
 
 				if (!ops.empty())
 				{
+					 System.out.println("imbalanced brackets: ");
 					return false;
 					
 				}
@@ -245,6 +247,7 @@ public class Validate {
 
         if (validateFirstindex()) {
             if (endExpression()) {
+		if (checkBrackets()) {
                 
                     if (validCharacters()) {
                         if (operatorSeq()) {
@@ -254,7 +257,7 @@ public class Validate {
                             }
                         }
                     }
-               
+		}
             }
         }
     }
