@@ -17,6 +17,47 @@ public class Validate {
             return false;
         }
     }
+    
+    //This methods check for balanced brackets
+    
+    public static boolean checkBrackets()
+			{
+				 public static Stack<Character> ops = new Stack<Character>();
+				 
+				int i = 0;
+					for(i=0;i<tokens.length;i++)
+					{
+						if((tokens[i] == '(' ))
+						{
+							ops.push(tokens[i]);
+							
+						}else if(tokens[i] == ')')
+						{
+							if (!ops.empty())
+							{
+								ops.pop();
+							
+								
+							}else
+							{
+								return false;
+							}
+
+						
+
+						
+
+
+					}
+				}
+
+				if (!ops.empty())
+				{
+					return false;
+					
+				}
+				return true;
+			}
 
     //This method checks if the end of the expression is valid
     public static boolean endExpression() {
