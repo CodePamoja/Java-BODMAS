@@ -22,7 +22,7 @@ public class Validate {
     
     public static boolean checkBrackets()
 			{
-				 public static Stack<Character> ops = new Stack<Character>();
+				  Stack<Character> ops = new Stack<Character>();
 				 
 				int i = 0;
 					for(i=0;i<tokens.length;i++)
@@ -262,3 +262,4 @@ public class Validate {
         }
     }
 }
+
