@@ -240,7 +240,7 @@ public class Validate {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter Expression to Evaluate: ");
+        System.out.println("Enter Expression to validate: ");
         String expression = scanner.nextLine();
 
         tokens = expression.toCharArray();
