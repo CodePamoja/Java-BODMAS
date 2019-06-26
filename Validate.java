@@ -67,6 +67,13 @@ public class Validate {
        			 return false;
        		
        	}
+                
+                if ((tokens[i] == '*' || tokens[i] == '/' || tokens[i] == '&') && (tokens[i + 1] == '*' || tokens[i + 1] == '/' || tokens[i + 1] == '&'  ) ) {
+              		 
+          			 System.out.println("Invalid String");
+          			 return false;
+          		
+          	}
                
             }
             
