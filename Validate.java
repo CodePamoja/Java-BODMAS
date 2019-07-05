@@ -213,11 +213,6 @@ public final class Validate {
         }
         removeSpaces();
 
-        //Remove '+' operator from the beginning of the expression
-        if (tokens[0]=='+') {
-            tokens[0]=' ';
-        }
-
         return true;
     }
 
