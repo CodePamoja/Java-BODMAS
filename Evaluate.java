@@ -34,8 +34,8 @@ public class Evaluate {
                 i++;
             }
 
-            //Current token is a negative number after an opening bracket
-            else if (tokens[i]=='-' && i != 0 && tokens[i-1]=='(') {
+            //Current token is a negative number after an opening bracket, multiplication or division operators
+            else if (tokens[i]=='-' && i != 0 && (tokens[i-1]=='(' || tokens[i-1]=='*' || tokens[i-1]=='/')) {
                 StringBuffer buffer = new StringBuffer();
                 buffer.append(tokens[i]);
                 int j = i+1;
@@ -51,8 +51,8 @@ public class Evaluate {
                 i++;
             }
 
-            //Current token is a positive number after an opening bracket
-            else if (tokens[i]=='+' && i != 0 && tokens[i-1]=='(') {
+            //Current token is a positive number after an opening bracket, multiplication or division operators
+            else if (tokens[i]=='+' && i != 0 && (tokens[i-1]=='(' || tokens[i-1]=='*' || tokens[i-1]=='/')) {
                 i++;
             }
 
